@@ -4,27 +4,20 @@ using namespace std;
 
 // } Driver Code Ends
 class Solution {
-    
   public:
-    bool detectCycle(int V,vector<int> adj[],vector<int> &visited,int src)
+    bool detectCycle(int src,vector<int> adj[],vector<int> &visited,int parent)
     {
-        visited[src]=1;
-        queue<pair<int,int>> q;
-        q.push({src,-1});
-        while(!q.empty())
+        if(!visited[src])
         {
-            int parent=q.front().second;
-            int node=q.front().first;
-            q.pop();
-            for(auto i:adj[node])
+            visited[src]=1;
+            for(auto it:adj[src])
             {
-                if(!visited[i])
+                if(!visited[it])
                 {
-                    visited[i]=1;
-                    q.push({i,node});
+                    if(detectCycle(it,adj,visited,src))
+                        return true;
                 }
-                else if(i!=parent)
-                    return true;
+                else if(it!=parent)return true;
             }
         }
         return false;
@@ -37,8 +30,7 @@ class Solution {
         {
             if(!visited[i])
             {
-                if(detectCycle(V,adj,visited,i))
-                    return true;
+                if(detectCycle(i,adj,visited,-1))return true;
             }
         }
         return false;
