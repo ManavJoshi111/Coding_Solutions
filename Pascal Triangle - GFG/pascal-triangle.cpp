@@ -7,8 +7,7 @@ using namespace std;
 // } Driver Code Ends
 // #define ll long long
 class Solution{
-private: 
-long long MOD =1e9+7;
+    long long MOD=1e9+7;
 public:
     vector<ll> nthRowOfPascalTriangle(int n) {
         // code here
