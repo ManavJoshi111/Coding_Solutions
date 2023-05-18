@@ -11,25 +11,19 @@
  */
 class Solution {
 public:
-    vector<int> vec;
-    void makevector(TreeNode* root)
+    void makeVec(vector<int> &inorder,TreeNode* root)
     {
-        if(root==nullptr)
-            return;
-        makevector(root->left);
-        vec.push_back(root->val);
-        makevector(root->right);
+        if(root==nullptr)return;
+        makeVec(inorder,root->left);
+        inorder.push_back(root->val);
+        makeVec(inorder,root->right);
     }
     bool isValidBST(TreeNode* root) {
-         makevector( root);
-        if(!root->left and !root->right)return true;
-        int n=vec.size()-1;
-        for(int i=0;i<n;i++)
+        vector<int> inorder;
+        makeVec(inorder,root);
+        for(int i=0;i<inorder.size()-1;i++)
         {
-            cout<<"First ; "<<vec[i]<<endl;
-            cout<<"SEc : "<<vec[i+1]<<endl;
-            if(vec[i]>=vec[i+1])
-                return false;
+            if(inorder[i]>=inorder[i+1])return false;
         }
         return true;
     }
