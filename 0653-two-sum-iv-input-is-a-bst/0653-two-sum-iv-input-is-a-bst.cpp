@@ -11,31 +11,26 @@
  */
 class Solution {
 public:
+    void findInorder(TreeNode* root,vector<int> &inorder)
+    {
+        if(!root)return;
+        findInorder(root->left,inorder);
+        inorder.push_back(root->val);
+        findInorder(root->right,inorder);
+    }
     bool findTarget(TreeNode* root, int k) {
-        unordered_set<int> set;
-        return dfs(root, set, k);
+        vector<int> inorder;
+        findInorder(root,inorder);
+        int low=0,high=inorder.size()-1;
+        while(low<high)
+        {
+            if(inorder[low]+inorder[high]==k)
+                return true;
+            if(inorder[low]+inorder[high]>k)
+                high--;
+            else
+                low++;
+        }
+        return false;
     }
-    
-    bool dfs(TreeNode* root, unordered_set<int>& set, int k){
-        if(root == NULL)return false;
-        if(set.count(k - root->val))return true;
-        set.insert(root->val);
-        return dfs(root->left, set, k) || dfs(root->right, set, k);
-    }
-//     map<int,int> mp;
-//     bool findTarget(TreeNode* root, int k) {
-//         if(root==nullptr)return false;
-//         mp[root->val]++;
-//         int find=k-root->val;
-//         if(find==root->val)
-//         {
-//             return (findTarget(root->right,k) or findTarget(root->left,k));
-//         }
-//         if(mp[find]>=1)return true;
-//         if(find>root->val)
-//             return findTarget(root->right,k);
-//         else
-//             return findTarget(root->left,k);
-        
-//     }
 };
