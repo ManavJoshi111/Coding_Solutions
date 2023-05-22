@@ -1,16 +1,16 @@
 class Solution {
 public:
     int removeDuplicates(vector<int>& nums) {
-        map<int,int> mp;
-        for(auto it:nums)
-            mp[it]++;
-        int i=0;
-        for(auto it:mp)
+        int i=0,j=1;
+        while(j<nums.size())
         {
-            // cout<<"it : "<<it.first<<endl;/
-            nums[i]=it.first;
-            i++;
+            if(nums[i]!=nums[j])
+            {
+                nums[++i]=nums[j++];
+            }
+            else
+                j++;
         }
-        return i;
+        return i+1;
     }
 };
